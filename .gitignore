@@ -52,6 +52,8 @@ lerna-debug.log*
 # Backup folders
 ia_bot_v2_backup/
 *_backup/
+*.tar.gz
+*.zip
 
 # Vercel
 .vercel
