@@ -30,5 +30,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
 , "middleware"  ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "ia_bot_v2_backup", "**/*_backup"]
 }

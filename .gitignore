@@ -49,6 +49,10 @@ lerna-debug.log*
 .env.development.local
 .env.test.local
 
+# Backup folders
+ia_bot_v2_backup/
+*_backup/
+
 # Vercel
 .vercel
 
