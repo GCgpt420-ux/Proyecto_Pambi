@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Info, Image as ImageIcon, Send } from 'lucide-react';
-import { useMemo } from 'react';
-
+import { AiExplanation } from './Aiexplanation';
 
 interface QuestionCardProps {
   question: {
@@ -17,21 +16,22 @@ interface QuestionCardProps {
   };
   selectedAnswer: string | null;
   onAnswerSelected: (answer: string) => void;
+  attemptId?: string; // Agregado para que TS no arroje error
 }
 
 export function QuestionCard({
   question,
   selectedAnswer,
   onAnswerSelected,
+  attemptId = 'test-attempt-id', // ID de respaldo por si no se pasa desde arriba
 }: QuestionCardProps) {
   const [showExplanation, setShowExplanation] = useState(false);
 
   // Combinar respuesta correcta con distractores y shufflear
-    const options = useMemo(() => {
+  const options = useMemo(() => {
     return [question.correct_answer, ...question.distractors]
-        .sort(() => Math.random() - 0.5);
-    }, [question.id]);
-
+      .sort(() => Math.random() - 0.5);
+  }, [question.id]);
 
   // Asignar letras (A, B, C, D, etc)
   const optionsWithLetters = options.map((opt, idx) => ({
@@ -150,9 +150,21 @@ export function QuestionCard({
         </button>
 
         {showExplanation && (
-          <div className="mt-3 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-gray-800">
-            <p className="font-semibold text-blue-900 mb-2">Explicación:</p>
-            <p>{question.explanation}</p>
+          <div className="mt-3 space-y-4">
+            {/* Explicación Estática */}
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-gray-800">
+              <p className="font-semibold text-blue-900 mb-2">Explicación:</p>
+              <p>{question.explanation}</p>
+            </div>
+            
+            {/* Explicación IA (Se muestra solo si hay una respuesta seleccionada y es incorrecta) */}
+            {selectedAnswer && selectedAnswer !== question.correct_answer && (
+              <AiExplanation
+                questionId={question.id}
+                selectedAnswer={selectedAnswer}
+                attemptId={attemptId}
+              />
+            )}
           </div>
         )}
       </div>
