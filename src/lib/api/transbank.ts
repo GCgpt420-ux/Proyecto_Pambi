@@ -1,12 +1,23 @@
-import { WebpayPlus, Options, Environment } from 'transbank-sdk';
+import { 
+  WebpayPlus, 
+  Options, 
+  Environment, 
+  IntegrationCommerceCodes, 
+  IntegrationApiKeys 
+} from 'transbank-sdk';
 import { createClient } from '@/lib/supabase/server';
 
-// Inicializamos el SDK de Transbank con tus variables de entorno
+// 1. Inicializamos Transbank a prueba de balas.
+// Verificamos si estamos en producción real.
+const isProduction = process.env.TBK_ENVIRONMENT === 'production';
+
+// Si es producción, usa tus variables reales (TBK_COMMERCE_CODE, etc.)
+// Si es integración (pruebas), usa las credenciales maestras oficiales del SDK que nunca fallan.
 const tx = new WebpayPlus.Transaction(
   new Options(
-    process.env.TRANSBANK_COMMERCE_CODE!,
-    process.env.TRANSBANK_API_KEY!,
-    process.env.TRANSBANK_ENVIRONMENT === 'PRODUCTION' ? Environment.Production : Environment.Integration
+    isProduction ? process.env.TBK_COMMERCE_CODE! : IntegrationCommerceCodes.WEBPAY_PLUS,
+    isProduction ? process.env.TBK_API_KEY! : IntegrationApiKeys.WEBPAY,
+    isProduction ? Environment.Production : Environment.Integration
   )
 );
 
@@ -56,7 +67,7 @@ export async function confirmPayment(token: string) {
     // 1. Confirmar pago en Transbank
     const response = await tx.commit(token);
 
-    if (response.response_code === 0) {
+    if (response.response_code === 0 && response.status === 'AUTHORIZED') {
       // 2. Si el pago es exitoso, actualizar la BD
       const supabase = await createClient();
       

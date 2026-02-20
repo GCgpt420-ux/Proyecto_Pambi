@@ -1,9 +1,12 @@
-import { Home, ClipboardList, BarChart3, BookOpen, Notebook } from "lucide-react";
+import Link from 'next/link';
+import { Home, ClipboardList, BookOpen, User } from "lucide-react"; // Agregamos 'User'
 
 const items = [
   { icon: Home, label: "Inicio", href: "/protected" },
   { icon: BookOpen, label: "Cursos", href: "/protected/cursos" },
   { icon: ClipboardList, label: "Ensayos PAES", href: "/protected/ensayos" },
+  // 👇 Aquí está tu nuevo botón de perfil 👇
+  { icon: User, label: "Mi Perfil", href: "/protected/perfil" }, 
 ];
 
 export function DashboardSidebar() {
@@ -24,7 +27,7 @@ export function DashboardSidebar() {
         {/* Navegación */}
         <nav className="flex flex-col gap-2">
           {items.map((item) => (
-            <a
+            <Link
               key={item.label}
               href={item.href}
               className="group flex items-center gap-3 px-4 py-3 rounded-xl text-blue-700 hover:bg-white hover:shadow-sm transition-all"
@@ -35,7 +38,7 @@ export function DashboardSidebar() {
               <span className="text-sm font-medium">
                 {item.label}
               </span>
-            </a>
+            </Link>
           ))}
         </nav>
 

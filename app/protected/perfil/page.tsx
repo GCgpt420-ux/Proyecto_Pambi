@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
-import { User, Save, GraduationCap, School, BookOpen, UserCircle } from 'lucide-react';
+import { Save, GraduationCap, School, BookOpen, UserCircle } from 'lucide-react';
+import Link from 'next/link'; // <-- Importamos Link para el botón
 
-// Definimos la forma de los datos del perfil
+// Agregamos is_premium a la interfaz
 interface ProfileData {
   full_name: string | null;
   age: number | null;
@@ -12,10 +13,10 @@ interface ProfileData {
   target_university: string | null;
   target_degree: string | null;
   email: string | null;
+  is_premium: boolean | null; // <-- Nuevo campo
 }
 
 export default function ProfilePage() {
-  // CORREGIDO: createBrowserClient en lugar de createClientComponentClient
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
@@ -25,7 +26,6 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  // Estado del formulario
   const [formData, setFormData] = useState<ProfileData>({
     full_name: '',
     age: null,
@@ -33,9 +33,9 @@ export default function ProfilePage() {
     target_university: '',
     target_degree: '',
     email: '',
+    is_premium: false, // <-- Valor inicial
   });
 
-  // 1. Cargar datos al iniciar
   useEffect(() => {
     const getProfile = async () => {
       try {
@@ -62,6 +62,7 @@ export default function ProfilePage() {
             target_university: data.target_university || '',
             target_degree: data.target_degree || '',
             email: user.email || '',
+            is_premium: data.is_premium || false, // <-- Lo leemos de Supabase
           });
         }
       } catch (error) {
@@ -74,7 +75,6 @@ export default function ProfilePage() {
     getProfile();
   }, [supabase]);
 
-  // 2. Manejar cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -83,7 +83,6 @@ export default function ProfilePage() {
     }));
   };
 
-  // 3. Guardar cambios
   const updateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -108,7 +107,6 @@ export default function ProfilePage() {
       if (error) throw error;
       setMessage({ type: 'success', text: '¡Perfil actualizado correctamente!' });
       
-      // Ocultar mensaje después de 3 segundos
       setTimeout(() => setMessage(null), 3000);
 
     } catch (error) {
@@ -126,10 +124,31 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       
-      {/* Encabezado de la Sección */}
-      <div className="flex flex-col gap-2 mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Mi Perfil de Estudiante</h1>
-        <p className="text-gray-600">Completa tu información para que podamos personalizar tus ensayos y plan de estudio.</p>
+      {/* Encabezado con el Botón de Pago */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold text-gray-800">Mi Perfil de Estudiante</h1>
+          <p className="text-gray-600">Completa tu información para personalizar tus ensayos.</p>
+        </div>
+
+        {/* --- TARJETA DE SUSCRIPCIÓN --- */}
+        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-5">
+          <div>
+            <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Plan actual</p>
+            <p className={`text-lg font-bold ${formData.is_premium ? 'text-purple-600' : 'text-gray-800'}`}>
+              {formData.is_premium ? '🌟 Premium' : 'Free'}
+            </p>
+          </div>
+          
+          {!formData.is_premium && (
+            <Link 
+              href="/pricing" 
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-md hover:shadow-lg transition-all text-sm whitespace-nowrap flex items-center gap-2"
+            >
+              ⚡ Mejorar Plan
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* Formulario Principal */}
