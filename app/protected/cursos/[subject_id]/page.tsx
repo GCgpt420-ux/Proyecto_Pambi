@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ArrowLeft, BookOpen, Zap, Loader } from 'lucide-react';
-import { TopicCard } from '@/components/dashboard/topic-card';
+import { TopicCard } from '@/src/features/dashboard/components/topic-card';
 import { Suspense } from 'react';
 
 interface Topic {

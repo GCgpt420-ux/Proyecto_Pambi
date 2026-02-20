@@ -1,6 +1,6 @@
 "use client";
 
-import { LogoutButton } from "@/components/logout-button";
+import { LogoutButton } from "@/src/features/auth/components/logout-button";
 
 export function DashboardHeader() {
   return (

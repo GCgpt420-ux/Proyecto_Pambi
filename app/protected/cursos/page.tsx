@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { SubjectCard } from '@/components/dashboard/subject-card';
+import { SubjectCard } from '@/src/features/dashboard/components/subject-card';
 import { Loader } from 'lucide-react';
 
 interface Subject {

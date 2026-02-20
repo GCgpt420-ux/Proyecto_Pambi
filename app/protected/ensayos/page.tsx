@@ -3,8 +3,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Loader, Plus, Calendar, FileText } from 'lucide-react';
-import { ExamCard } from '@/components/dashboard/exam-card';
-import { CreateExamModal } from '@/components/exam/create-exam-modal';
+import { ExamCard } from '@/src/features/dashboard/components/exam-card';
+import { CreateExamModal } from '@/src/features/exams/components/create-exam-modal';
 
 interface Exam {
   id: string;

@@ -4,8 +4,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Loader, Clock, CheckCircle2, AlertCircle, ArrowLeft } from 'lucide-react';
-import { QuestionCard } from '@/components/exam/question-card';
-import { ExamTimer } from '@/components/exam/exam-timer';
+import { QuestionCard } from '@/src/features/exams/components/question-card';
+import { ExamTimer } from '@/src/features/exams/components/exam-timer';
 
 interface Exam {
   id: string;

@@ -15,10 +15,10 @@ import {
   BarChart3,
   Calendar,
 } from 'lucide-react';
-import { ProgressChart } from '@/components/dashboard/progress-chart';
-import { AttemptHistory } from '@/components/dashboard/attempt-history';
-import { TopicStats } from '@/components/dashboard/topic-stats';
-import { QuickAccess } from '@/components/dashboard/quick-access';
+import { ProgressChart } from '@/src/features/dashboard/components/progress-chart';
+import { AttemptHistory } from '@/src/features/dashboard/components/attempt-history';
+import { TopicStats } from '@/src/features/dashboard/components/topic-stats';
+import { QuickAccess } from '@/src/features/dashboard/components/quick-access';
 
 interface DashboardStats {
   totalAttempts: number;
