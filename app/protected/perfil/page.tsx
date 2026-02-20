@@ -15,7 +15,7 @@ interface ProfileData {
 }
 
 export default function ProfilePage() {
-  // ✅ CORREGIDO: createBrowserClient en lugar de createClientComponentClient
+  // CORREGIDO: createBrowserClient en lugar de createClientComponentClient
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!

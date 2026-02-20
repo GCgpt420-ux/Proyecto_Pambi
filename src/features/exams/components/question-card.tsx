@@ -16,14 +16,14 @@ interface QuestionCardProps {
   };
   selectedAnswer: string | null;
   onAnswerSelected: (answer: string) => void;
-  attemptId?: string; // <-- Agregado para la IA
+  attemptId?: string;
 }
 
 export function QuestionCard({
   question,
   selectedAnswer,
   onAnswerSelected,
-  attemptId = 'test-attempt-id', // <-- Valor por defecto
+  attemptId = 'test-attempt-id',
 }: QuestionCardProps) {
   const [showExplanation, setShowExplanation] = useState(false);
 

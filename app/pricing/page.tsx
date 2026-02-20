@@ -96,7 +96,7 @@ export default function PricingPage() {
               </li>
               <li className="flex items-start gap-3 text-gray-900 font-semibold">
                 <Check className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                <span>Explicaciones IA Ilimitadas ✨</span>
+                <span>Explicaciones IA Ilimitadas </span>
               </li>
             </ul>
 
