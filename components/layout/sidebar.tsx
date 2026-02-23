@@ -5,7 +5,6 @@ const items = [
   { icon: Home, label: "Inicio", href: "/protected" },
   { icon: BookOpen, label: "Cursos", href: "/protected/cursos" },
   { icon: ClipboardList, label: "Ensayos PAES", href: "/protected/ensayos" },
-  // 👇 Aquí está tu nuevo botón de perfil 👇
   { icon: User, label: "Mi Perfil", href: "/protected/perfil" }, 
 ];
 
